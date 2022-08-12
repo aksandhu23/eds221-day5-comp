@@ -43,16 +43,16 @@ Add line-by-line comments wheres prompted in the code below, explaining what eac
 # ------ WHAT HAPPENS HERE? ------ #
 # ------ comment line-by-line ---- #
 
-# The line below...
+# The line below...is sequencing the time in year from starting point 0 to ending point 8, by an increment of 1. 
 time_yr <- seq(from = 0, to = 8, by = 1)
 
-# The line below...
+# The line below...the empty vector which is a placeholder matrix so it can be populated later
 proj_year <- matrix(ncol = length(fish_year0), nrow = length(time_yr))
 
-# The line below...
+# The line below... is calling the first row and all columns after it. That's what the comma means after it. Taking the empty matrix for one row for each year. 
 proj_year[1, ] <- fish_year0
 
-# The for loop below...
+# The for loop below...we start at 2 and carry time because the first year has been populated so we want to start at 2. We are looping over fish leslie ad taking the dot product and then grabbing the initial vales (i-1). Take the dot product of the matrix fish leslie with the previous years population to get the ... Population is a single variable which needs to be placed into 1 column  
 for (i in 2:length(time_yr)) {
   proj_year[i,] <- fish_leslie %*% proj_year[i-1,]
 }
@@ -60,6 +60,8 @@ for (i in 2:length(time_yr)) {
 
 # The rest is wrangling & visualization (run to check it out):
 colnames(proj_year) <- c("eggs", "fry", "juvenile", "adult")
+
+# Pivot Longer: Organize data from wide format to long format to have a single column for each variable... Collapse everything besides 
 
 proj_df <- data.frame(time_yr, proj_year) %>% 
   pivot_longer(cols = -time_yr, names_to = "lifestage", values_to = "stage_population")
